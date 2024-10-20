@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Library.Scripts.Modules.Input;
 using UnityEngine;
 
 namespace Library.Scripts.Core
@@ -25,6 +26,9 @@ namespace Library.Scripts.Core
 
         #endregion
 
+        [SerializeField] private InputController _inputController;
+
+        public static InputController InputController => _instance._inputController;
 
         public async Task Init(EnterPoint enterPoint) {
             
@@ -32,7 +36,12 @@ namespace Library.Scripts.Core
 
         public void InitGlobal()
         {
-           
+            _inputController.Init();
+        }
+
+        public void FreeControllers()
+        {
+           _inputController.Free();
         }
     }
 }

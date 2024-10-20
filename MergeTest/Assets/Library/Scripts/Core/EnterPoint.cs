@@ -67,7 +67,7 @@ namespace Library.Scripts.Core {
       _destructProcess = true;
       //PlayMakerFSM.BroadcastEvent(GlobalEvents.EnterPointDestructEvent);
       StopAllCoroutines();
-      //CommonComponents.Instance.FreeControllers();
+      CommonComponents.Instance.FreeControllers();
       SceneComponentsRef.Destruct();
     }
   }
