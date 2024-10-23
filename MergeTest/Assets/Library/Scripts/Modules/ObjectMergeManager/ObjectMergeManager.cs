@@ -8,6 +8,8 @@ namespace Library.Scripts.Modules.ObjectMergeManager
 {
    public class ObjectMergeManager : MonoBehaviour
    {
+      [SerializeField] private Vector2 _draggableZone;
+      
       private InputController _inputController;
       private ISelectable _lastSelected;
       private bool _isGrab;
@@ -29,8 +31,14 @@ namespace Library.Scripts.Modules.ObjectMergeManager
       {
          var mousePos =  _inputController.MousePos;
          mousePos.z = 10;
-         var worldPoint =  Camera.main.ScreenToWorldPoint(mousePos);
-         moveObject.transform.position = worldPoint;
+         var worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
+         var objectPos = moveObject.transform.position;
+
+         if ((worldPoint.x < _draggableZone.x / 2 && worldPoint.x > -_draggableZone.x / 2))
+            moveObject.transform.position = new Vector3(worldPoint.x, objectPos.y, objectPos.z);
+         
+         if (worldPoint.z < _draggableZone.y / 2 && worldPoint.z > -_draggableZone.y / 2)
+            moveObject.transform.position = new Vector3(objectPos.x, objectPos.y, worldPoint.z);
       }
 
       private void Subscribe()
@@ -117,7 +125,7 @@ namespace Library.Scripts.Modules.ObjectMergeManager
 
       public void Free()
       {
-         Unsubscribe();
+         //Unsubscribe();
       }
    }
 }

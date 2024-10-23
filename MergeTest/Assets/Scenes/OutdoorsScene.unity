@@ -177,8 +177,8 @@ Transform:
   m_GameObject: {fileID: 95996462}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 10}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1574987260}
@@ -1436,7 +1436,7 @@ Transform:
   m_GameObject: {fileID: 1823688464}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0.7, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1686,6 +1686,22 @@ PrefabInstance:
     - target: {fileID: 884726370943458883, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310191653197245439, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
+      propertyPath: _loadWindowList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310191653197245439, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
+      propertyPath: '_loadWindowList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d57381d940d3f442b68e63dc9e11c40, type: 2}
+    - target: {fileID: 4075611467624557678, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
+      propertyPath: _draggableZone.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075611467624557678, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
+      propertyPath: _draggableZone.y
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 4124858238902800765, guid: e74075ee37cd94e43be24a6f328798a7, type: 3}
       propertyPath: m_Name

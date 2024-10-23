@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using Library.Scripts.Modules.ElementController;
 using Library.Scripts.Modules.Input;
+using Library.Scripts.Modules.Ui;
 using UnityEngine;
 
 namespace Library.Scripts.Core
@@ -26,22 +28,36 @@ namespace Library.Scripts.Core
 
         #endregion
 
+        [SerializeField] private UiCanvas _uiCanvas;
         [SerializeField] private InputController _inputController;
+        [SerializeField] private ElementController _elementController;
 
         public static InputController InputController => _instance._inputController;
+        public static UiCanvas UiCanvas => _instance._uiCanvas;
+        public static ElementController ElementController => _instance._elementController;
 
-        public async Task Init(EnterPoint enterPoint) {
-            
+        public async Task Init(EnterPoint enterPoint)
+        {
+            _uiCanvas.Init(enterPoint.LoadWindowList);
         }
 
+        public async Task LoadData() {
+            await Task.WhenAll(
+                _elementController.LoadData()
+            );
+        }
+        
         public void InitGlobal()
         {
             _inputController.Init();
+            _elementController.Init();
         }
 
         public void FreeControllers()
         {
+            _uiCanvas.Destruct();
            _inputController.Free();
+           _elementController.Free();
         }
     }
 }

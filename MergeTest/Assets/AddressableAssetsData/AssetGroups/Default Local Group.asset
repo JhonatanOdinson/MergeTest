@@ -15,6 +15,18 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 8880c6f0a3dea464ca40d4db48c25162
   m_SerializeEntries:
+  - m_GUID: 1742e3da91805124589cfab97fdfc2e7
+    m_Address: Assets/Library/Data/ScriptableData/CombinationData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CombinationData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a8bd0677b003ca4bb8794cf164ddbd1
+    m_Address: Assets/Library/Data/ScriptableData/ElementsData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ElementData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48c901c9524659e44b31422b8e17ba8e
     m_Address: Assets/Library/ScriptableData/GameConfig.asset
     m_ReadOnly: 0
