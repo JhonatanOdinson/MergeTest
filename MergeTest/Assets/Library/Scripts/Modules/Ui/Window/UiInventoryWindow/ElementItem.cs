@@ -1,16 +1,45 @@
+using System;
+using Library.Scripts.ScriptableObjects;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ElementItem : MonoBehaviour
+namespace Library.Scripts.Modules.Ui.Window.UiInventoryWindow
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class ElementItem : PoolableItem
     {
-        
-    }
+        [SerializeField] private ElementData _elementData;
+        [SerializeField] private TextMeshProUGUI _elementName;
+        [SerializeField] private Image _bgImage;
+        [SerializeField] private Button _button;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public event Action<ElementData> OnElementClick; 
+
+        public void Init()
+        {
+            _button.onClick.AddListener(OnElementClickHandler);
+            gameObject.SetActive(true);
+        }
+
+        private void OnElementClickHandler()
+        {
+            OnElementClick?.Invoke(_elementData);
+            Debug.Log($"Click: {_elementData.Name}");
+        }
+
+        public void UpdateElement(ElementData elementData)
+        {
+            _elementData = elementData;
+            _elementName.text = _elementData.Name;
+            _bgImage.color = _elementData.ElementColor;
+        }
+
+        public override void Free()
+        {
+            _button.onClick.RemoveListener(OnElementClickHandler);
+            gameObject.SetActive(false);
+            _elementData = null;
+            _elementName.text = string.Empty;
+        }
     }
 }

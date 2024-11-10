@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Library.Scripts.Modules.Ui.Window;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Library.Scripts.Modules.Ui
@@ -13,6 +15,8 @@ namespace Library.Scripts.Modules.Ui
 
       [SerializeField] private List<WindowBase> _windowList = new();
 
+      public event Action OnUpdateWindow; 
+
       public void Init(IEnumerable<WindowData> windowList)
       {
          foreach (WindowData windowData in windowList)
@@ -20,6 +24,11 @@ namespace Library.Scripts.Modules.Ui
             var window = Instantiate(windowData.GetWindowRef, _windowContainer).GetComponent<WindowBase>();
             window.Init();
          }
+      }
+
+      private void FixedUpdate()
+      {
+         OnUpdateWindow?.Invoke();
       }
 
       public void Destruct()

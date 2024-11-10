@@ -1,6 +1,7 @@
 using Library.Scripts.Core;
 using Library.Scripts.Interfaces;
 using Library.Scripts.Modules.Actor;
+using Library.Scripts.Modules.ActorComponents.MergeChecker;
 using Library.Scripts.Modules.Input;
 using UnityEngine;
 
@@ -12,16 +13,29 @@ namespace Library.Scripts.Modules.ObjectMergeManager
       
       private InputController _inputController;
       private ISelectable _lastSelected;
-      private bool _isGrab;
+      private bool _isGrab = false;
+      private bool _initialized;
       
       public void Init()
       {
          _inputController = CommonComponents.InputController;
          Subscribe();
+         _initialized = true;
+         CommonComponents.ElementController.OnDestroyActor += DestroyElement;
       }
-      
+
+      private void DestroyElement(ActorBase actorBase)
+      {
+         if (_lastSelected.GetSelected() == actorBase.gameObject)
+         {
+            _lastSelected = null;
+            SelectObject(null);
+         }
+      }
+
       private void FixedUpdate()
       {
+         if (!_initialized) return;
          SelectObject(CheckClick());
          if (_isGrab && _lastSelected is not null)
             MoveObject(_lastSelected.GetSelected());
@@ -34,11 +48,20 @@ namespace Library.Scripts.Modules.ObjectMergeManager
          var worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
          var objectPos = moveObject.transform.position;
 
-         if ((worldPoint.x < _draggableZone.x / 2 && worldPoint.x > -_draggableZone.x / 2))
+         //Debug.Log($"x: {worldPoint.x} < {_draggableZone.x / 2} && > {-(_draggableZone.x / 2)}");
+         //Debug.Log($"y: {worldPoint.z} < {_draggableZone.y / 2} && > {-(_draggableZone.y / 2)}");
+
+         bool xMove = (worldPoint.x < _draggableZone.x / 2 && worldPoint.x > -(_draggableZone.x / 2));
+         bool yMove = (worldPoint.z < _draggableZone.y / 2 && worldPoint.z > -(_draggableZone.y / 2));
+         
+         if (xMove)
             moveObject.transform.position = new Vector3(worldPoint.x, objectPos.y, objectPos.z);
          
-         if (worldPoint.z < _draggableZone.y / 2 && worldPoint.z > -_draggableZone.y / 2)
+         if (yMove)
             moveObject.transform.position = new Vector3(objectPos.x, objectPos.y, worldPoint.z);
+         
+         if(xMove && yMove)
+            moveObject.transform.position = new Vector3(worldPoint.x, objectPos.y, worldPoint.z);
       }
 
       private void Subscribe()
@@ -81,6 +104,19 @@ namespace Library.Scripts.Modules.ObjectMergeManager
          if (_lastSelected is not null && objectClick == null)
          {
             _lastSelected.Deselect();
+            var actorGO = _lastSelected.GetSelected();
+            if (actorGO)
+            {
+               var actor = actorGO.GetComponent<ActorBase>();
+               if (actor)
+               {
+                  var mergeChecker = actor.ActorComponents.FetchComponent<MergeChecker>();
+                  if(mergeChecker)
+                     mergeChecker.StartChecked(false);
+               }
+                  
+            }
+               
             _lastSelected = null;
             return;
          }
@@ -91,6 +127,9 @@ namespace Library.Scripts.Modules.ObjectMergeManager
             select.Select();
             //if(_lastSelected is not null) _lastSelected.Deselect();
             _lastSelected = select;
+            var mergeChecker = actorBase.ActorComponents.FetchComponent<MergeChecker>();
+            if(mergeChecker)
+               mergeChecker.StartChecked(true);
          }
 
          if (objectClick is ISelectable selectable)
@@ -108,9 +147,11 @@ namespace Library.Scripts.Modules.ObjectMergeManager
          RaycastHit hit;
          if (Physics.Raycast(ray, out hit, 100))
          {
-            object selectable = hit.collider.gameObject.GetComponent<ActorBase>() == null ? 
+            object selectable = hit.collider.gameObject.GetComponent<ActorComponentBase>() == null ? 
                hit.collider.gameObject.GetComponent<ISelectable>() : 
-               hit.collider.gameObject.GetComponent<ActorBase>();
+               hit.collider.gameObject.GetComponent<ActorComponentBase>();
+            if (selectable is ActorComponentBase actorComponent)
+               selectable = actorComponent.GetOwner;
             if (selectable is not null) 
                return selectable;
          }
@@ -120,11 +161,19 @@ namespace Library.Scripts.Modules.ObjectMergeManager
 
       private void OnRightClickHandler()
       {
-         Debug.Log($"RightClick");
+         var obj = CheckClick();
+         if (obj is null) return;
+         if (obj is ActorBase actorBase)
+         {
+            CommonComponents.ElementController.DestroyActor(actorBase);
+         }
+            
+            
       }
 
       public void Free()
       {
+         _initialized = false;
          //Unsubscribe();
       }
    }

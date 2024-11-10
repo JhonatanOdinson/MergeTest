@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7379ca62c1d1664e85a6e0faa999b09, type: 3}
   m_Name: Oxygen
   m_EditorClassIdentifier: Assembly-CSharp:Library.Scripts.ScriptableObjects:CombinationData/ElementData
-  _name: O2
+  _name: oxygen
   _icon: {fileID: 0}
+  _elementColor: {r: 0, g: 0, b: 0, a: 0}
+  _allowedConnection: []
   _formula:
   - _elementData: {fileID: 11400000, guid: aecff4fe63a7a6640a3d98eb227cd485, type: 2}
     _count: 2

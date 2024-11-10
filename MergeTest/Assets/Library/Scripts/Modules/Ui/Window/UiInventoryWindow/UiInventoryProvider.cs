@@ -1,16 +1,33 @@
+using Library.Scripts.Core;
 using UnityEngine;
-
-public class UiInventoryProvider : MonoBehaviour
+namespace Library.Scripts.Modules.Ui.Window.UiInventoryWindow
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class UiInventoryProvider : MonoBehaviour
     {
+        private UiInventoryWindow _window;
+        private ElementController.ElementController _elementController;
         
-    }
+        public void Init(WindowBase window)
+        {
+            _window = (UiInventoryWindow)window;
+            _elementController = CommonComponents.ElementController;
+            ShowWindow();
+        }
+        
+        public void ShowWindow()
+        {
+            _window.UpdateData(_elementController.ElementDatas);
+            _window.Show();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void HideWindow()
+        {
+            
+        }
+
+        public void FreeWindow()
+        {
+            
+        }
     }
 }

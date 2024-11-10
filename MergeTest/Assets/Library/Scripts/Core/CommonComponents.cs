@@ -38,6 +38,7 @@ namespace Library.Scripts.Core
 
         public async Task Init(EnterPoint enterPoint)
         {
+            Debug.Log($"Init");
             _uiCanvas.Init(enterPoint.LoadWindowList);
         }
 
@@ -49,6 +50,7 @@ namespace Library.Scripts.Core
         
         public void InitGlobal()
         {
+              Debug.Log($"Init Global");
             _inputController.Init();
             _elementController.Init();
         }

@@ -21,6 +21,7 @@ namespace Library.Scripts.Modules.ElementController
 
         public void Add(int count)
         {
+            if (_elementData is CombinationData) return;
             _count += count;
         }
 

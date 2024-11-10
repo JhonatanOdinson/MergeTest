@@ -5,18 +5,21 @@ using UnityEngine;
 namespace Library.Scripts.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "CombinationData", menuName = "ScriptableData/Data/CombinationData")]
-        public class CombinationData : ScriptableObject
+        public class CombinationData : ElementData
         {
-            [SerializeField] private string _name;
-            [SerializeField] private Sprite _icon;
             [SerializeField] private List<ElementDataEx> _formula = new ();
-
-            public string Name => _name;
-            public Sprite Icon => _icon;
-
+            public List<ElementDataEx> Formula => _formula;
             public bool CheckFormula(List<ElementDataEx> elementDatas)
             {
-                return _formula == elementDatas;
+                var allowElementCount = 0;
+                foreach (var elementDataEx in elementDatas)
+                {
+                    if (_formula.Exists(e=> e.ElementData == elementDataEx.ElementData && e.Count == elementDataEx.Count))
+                        allowElementCount++;
+                }
+
+                Debug.Log($"AllowElementCount: {allowElementCount}/{_formula.Count} | Formula: {Name}");
+                return allowElementCount == _formula.Count && elementDatas.Count == _formula.Count;
             }
         }
 }

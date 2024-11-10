@@ -11,10 +11,12 @@ namespace Library.Scripts.Core {
     private bool _destructProcess;
     [SerializeField] private List<WindowData> _loadWindowList = new List<WindowData>();
     [SerializeField] private SceneComponents _sceneComponents;
+    [SerializeField] private Transform _actorContainer;
     public Action OnEnterPointInited;
     
     public SceneComponents SceneComponentsRef => _sceneComponents;
     public IEnumerable<WindowData> LoadWindowList => _loadWindowList;
+    public Transform ActorContainer => _actorContainer;
     public bool DestructProcess => _destructProcess;
 
     async void Start() {

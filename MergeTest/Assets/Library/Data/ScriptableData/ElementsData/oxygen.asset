@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: O
   _icon: {fileID: 0}
+  _elementColor: {r: 0, g: 0, b: 0, a: 0}
   _allowedConnection:
   - {fileID: 11400000, guid: 45b57bf81842dea47b59e3c162bb7018, type: 2}
+  - {fileID: 11400000}

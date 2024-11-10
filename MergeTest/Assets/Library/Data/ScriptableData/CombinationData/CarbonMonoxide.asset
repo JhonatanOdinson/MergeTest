@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7379ca62c1d1664e85a6e0faa999b09, type: 3}
   m_Name: CarbonMonoxide
   m_EditorClassIdentifier: Assembly-CSharp:Library.Scripts.ScriptableObjects:CombinationData/ElementData
-  _name: CO2
+  _name: carbon monoxide
   _icon: {fileID: 0}
+  _elementColor: {r: 0, g: 0, b: 0, a: 0}
+  _allowedConnection: []
   _formula:
   - _elementData: {fileID: 11400000, guid: cb2e5a6d81cf6b547b0e81d971b7ccc8, type: 2}
     _count: 1
